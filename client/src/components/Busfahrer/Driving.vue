@@ -1,10 +1,7 @@
 <template>
     <div id="driving">
 
-    drivers:
-    <div v-for="driver in drivers" :key="driver">
-        {{driver}}
-    </div>
+    drivers: {{ drivers[0] }}
 
     <br><br>
 
@@ -93,6 +90,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -33,8 +33,16 @@ function initializeGame(roomIndex){
     rooms[roomIndex].drivers = [] //relevant for preempting and driving
     rooms[roomIndex].innerIndex = 0 //in preempting and driving are we at color, value or position
     rooms[roomIndex].preemptingRightWrong = [] //relevant for preempting
+    rooms[roomIndex].preemptCards
+    rooms[roomIndex].driverCards = ['x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',
+    'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',
+    'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',
+    'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',
+    'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',
+    'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x']
+    rooms[roomIndex].playerCards
 
-    resetPlayerCards(roomIndex)
+    preparePlayerCards(roomIndex)
     resetCardStack(roomIndex)
 }
 
@@ -95,21 +103,22 @@ function startFlipCards(roomIndex){  //TODO remove shit code
         rooms[roomIndex].drivers = getDrivers(roomIndex)
 
         if (rooms[roomIndex].drivers.length === 1){
-            startDrive(roomIndex, rooms[roomIndex].drivers)
+            startDrive(roomIndex)
         }else{
-            startPreempt(roomIndex, rooms[roomIndex].drivers)
+            startPreempt(roomIndex)
         }
     },INTERVALL_TIME*11)
 }
 
-function startPreempt(roomIndex, drivers){
+function startPreempt(roomIndex){
     console.log('startPreempt')
     rooms[roomIndex].gameMode = 'preempting'
     rooms[roomIndex].innerIndex = 0
     rooms[roomIndex].playerTurn = 0
     rooms[roomIndex].preemptingRightWrong = []
+
+    preparePreemptCards(roomIndex)
     
-    resetPlayerCards(roomIndex)
     resetCardStack(roomIndex)
 
     updateGame(roomIndex)
@@ -120,7 +129,6 @@ function startDrive(roomIndex){
     rooms[roomIndex].innerIndex = 0
     rooms[roomIndex].playerTurn = 0
 
-    resetPlayerCards(roomIndex)
     resetCardStack(roomIndex)
 
     updateGame(roomIndex)
@@ -144,7 +152,7 @@ function colorPick(roomIndex, name, color){
         resetCardStack(roomIndex)
     }
 
-    let receivedCard = cardToPlayer(roomIndex,name)
+    let receivedCard = cardToPlayer(roomIndex, name, rooms[roomIndex].playerCards[playerIndex][nextCard])
     let result
 
     if ((receivedCard.color === 'heart') || (receivedCard.color === 'caro')){
@@ -177,7 +185,7 @@ function valuePick(roomIndex, name, value){
         nextCard++
     }
 
-    let receivedCard = cardToPlayer(roomIndex,name)
+    let receivedCard = cardToPlayer(roomIndex, name, rooms[roomIndex].playerCards[playerIndex][nextCard])
     let result
 
     if (value === 'higher'){
@@ -219,7 +227,7 @@ function positionPick(roomIndex, name, position){
         nextCard++
     }
 
-    let receivedCard = cardToPlayer(roomIndex,name)
+    let receivedCard = cardToPlayer(roomIndex, name, rooms[roomIndex].playerCards[playerIndex][nextCard])
 
     let card1
     let card2
@@ -280,7 +288,7 @@ function flipNewCard(roomIndex){
     return card
 }
 
-function cardToPlayer(roomIndex, name){ // search who calls this function and remove cardno
+function cardToPlayer(roomIndex, name, cardArray){ // search who calls this function and remove cardno
 
     let cardIndex = Math.floor(Math.random()*rooms[roomIndex].cardsLeft.length)
     let playerIndex = getUserIndex(roomIndex, name)
@@ -289,18 +297,26 @@ function cardToPlayer(roomIndex, name){ // search who calls this function and re
     while (rooms[roomIndex].playerCards[playerIndex][nextCard] !== 'x'){
         nextCard++
     }
-    rooms[roomIndex].playerCards[playerIndex][nextCard] = JSON.parse(JSON.stringify(card)) //anonymous error... maybe async?
+    cardArray = JSON.parse(JSON.stringify(card)) //anonymous error... maybe async?
 
     rooms[roomIndex].cardsLeft.splice(cardIndex, 1)
 
     return card
 }
 
-function resetPlayerCards(roomIndex){
-    console.log('resetPlayerCards')
+function preparePreemptCards(roomIndex){
+    console.log('preparePreemptCards')
     rooms[roomIndex].playerCards = []
     for(var i = 0; i < rooms[roomIndex].players.length; i++){
-        rooms[roomIndex].playerCards[getUserIndex(roomIndex, rooms[roomIndex].players[i].name)] = ['x', 'x', 'x', 'x', 'x', 'x', 'x']
+        rooms[roomIndex].playerCards[getUserIndex(roomIndex, rooms[roomIndex].players[i].name)] = ['x', 'x', 'x']
+    }
+}
+
+function preparePlayerCards(roomIndex){
+    console.log('preparePlayerCards')
+    rooms[roomIndex].playerCards = []
+    for(var i = 0; i < rooms[roomIndex].players.length; i++){
+        rooms[roomIndex].playerCards[getUserIndex(roomIndex, rooms[roomIndex].players[i].name)] = ['x', 'x', 'x']
     }
 }
 

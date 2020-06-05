@@ -106,7 +106,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #your-cards{
   margin: auto;
   height: 120px;

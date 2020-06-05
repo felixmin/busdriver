@@ -215,7 +215,9 @@ export default {
 
 <style>
 #card-cont{
-  float:left
+  float:left;
+  width: 60px;
+  height: 80px
 }
 @import '../../assets/CSS-Playing-Cards/cards.css';
 </style>

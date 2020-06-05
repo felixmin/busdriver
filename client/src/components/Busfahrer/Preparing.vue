@@ -1,6 +1,6 @@
 <template>
     <div id="preparing">
-      preparing
+      Wait until everybody joined the game...
       <button @click="startGame">Start</button>
     </div>
 </template>
@@ -18,6 +18,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

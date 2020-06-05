@@ -18,9 +18,7 @@
       error
     </div>
 
-    <ShotLog />
 
-    <div id="action"></div>
   </div>
 </template>
 
@@ -32,7 +30,6 @@ import FlippingCards from '@/components/Busfahrer/FlippingCards.vue'
 import Preempt from '@/components/Busfahrer/Preempt.vue'
 import Driving from '@/components/Busfahrer/Driving.vue'
 import Result from '@/components/Busfahrer/Result.vue'
-import ShotLog from '@/components/Busfahrer/ShotLog.vue'
 
 export default {
   name: 'Game',
@@ -42,8 +39,7 @@ export default {
     FlippingCards,
     Preempt,
     Driving,
-    Result,
-    ShotLog
+    Result
   },
   computed: {
     gameMode(){
@@ -55,4 +51,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+#game{
+  height: 800px;
+  width: 1000px;
+  margin: auto;
+  background: rgb(180, 160, 196);
+  position: relative;
+}
+
 </style>
