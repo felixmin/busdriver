@@ -456,6 +456,7 @@ io.on('connection', socket => {
     //OUTPUT: players receive changed game object
     //(changes: gameMode, cardsLeft, cards[player].card2, playerTurn)
 
+    console.log(rooms[roomIndex])
         colorPick(roomIndex, name, data.color) //deals card
 
         let playerTurn = rooms[roomIndex].playerTurn // TODO: SET THIS TO BEGINNING AND REMOVE INDEXOF PLAYER
@@ -468,12 +469,15 @@ io.on('connection', socket => {
             rooms[roomIndex].playerTurn = 0
             updateGame(roomIndex)
         }
+
+        console.log(rooms[roomIndex])
     }),
 
     socket.on('valuePick', data => { //data = {name: , value: higher/lower} 
     //OUTPUT: players receive changed game object
     //(changes: gameMode, cardsLeft, cards[player].card2, playerTurn)
 
+    console.log(rooms[roomIndex])
         valuePick(roomIndex, name, data.value)
 
         let playerTurn = rooms[roomIndex].playerTurn // TODO: SET THIS TO BEGINNING AND REMOVE INDEXOF PLAYER
@@ -485,12 +489,14 @@ io.on('connection', socket => {
             rooms[roomIndex].playerTurn = 0
             updateGame(roomIndex)
         }
+        console.log(rooms[roomIndex])
     }),
 
     socket.on('positionPick', data => { // data = {name: , pick: inside/outside}
     //OUTPUT: players receive changed game object
     //(changes: gameMode, cardsLeft, playerCards, playerTurn)
 
+    console.log(rooms[roomIndex])
         positionPick(roomIndex, name, data.position)
 
         let playerTurn = rooms[roomIndex].playerTurn // TODO: SET THIS TO BEGINNING AND REMOVE INDEXOF PLAYER
@@ -503,6 +509,7 @@ io.on('connection', socket => {
             updateGame(roomIndex)
             startFlipCards(roomIndex)
         }
+        console.log(rooms[roomIndex])
     }),
 
     socket.on('gotFlippedCard', () => {
